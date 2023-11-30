@@ -1,0 +1,25 @@
+{
+  "name": "box-cli",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matt-ball/box-cli.git"
+  },
+  "author": "Matt Ball",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matt-ball/box-cli/issues"
+  },
+  "homepage": "https://github.com/matt-ball/box-cli#readme",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "box-node-sdk": "^3.4.2",
+    "commander": "^11.1.0",
+    "enquirer": "^2.4.1"
+  }
+}
