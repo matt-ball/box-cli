@@ -34,4 +34,4 @@ The beginnings of a CLI for use with [Box](https://box.com).
 
 ## Try extending the CLI
 
-The codebase has been kept purposefully light such that it be easy for all to understand. It uses popular packages and basic concepts while having just enough pre-existing code to define some patterns/expectations for future contributions. Try adding operations to support CRUD operations on folders!
+The codebase has been kept purposefully light such that it be easy for all to understand. It uses popular packages and basic concepts while having just enough pre-existing code to define some patterns/expectations for future contributions. Try adding support for CRUD operations on folders!
