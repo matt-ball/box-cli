@@ -20,6 +20,10 @@ const operations = {
   delete: async (fileId) => {
     await client.files.delete(fileId)
     console.log('File deleted')
+  },
+  create: async (parent, { name }) => {
+    const file = await client.files.create(parent, name)
+    console.log(file)
   }
 }
 
