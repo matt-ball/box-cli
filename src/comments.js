@@ -5,7 +5,7 @@ const operations = {
     const comment = await client.comments.get(CommentID)
     console.log(comment)
   },
-  create: async (fileId, { message }) => {
+  create: async (message, { fileId }) => {
     const comment = await client.comments.create(fileId, message)
     console.log(comment)
   },
