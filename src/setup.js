@@ -38,7 +38,7 @@ async function auth (req, res, clientCreds, box) {
   process.exit()
 }
 
-function startServer (clientCreds,box, authUrl) {
+function startServer (clientCreds, box, authUrl) {
   app.get('/oauth', (req, res) => {
     auth(req, res, clientCreds, box)
   })
@@ -49,7 +49,8 @@ function startServer (clientCreds,box, authUrl) {
 }
 
 async function setup () {
-  const clientCreds = await prompt(questions)
+  const existingCreds = config.get()
+  const clientCreds = existingCreds ? existingCreds.clientCreds : await prompt(questions)
   const box = new BoxSDK(clientCreds)
   const authUrl = box.getAuthorizeURL(authDetails)
   
