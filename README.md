@@ -32,6 +32,6 @@ The beginnings of a CLI for use with [Box](https://box.com).
 
 1. Run `box file upload <~/path/to/file.pdf> --folder 0` to upload a file to the root folder of your Box account
 
-## Try extending the CLI
+## Notes
 
-The codebase has been kept purposefully light such that it be easy for all to understand. It uses popular packages and basic concepts while having just enough pre-existing code to define some patterns/expectations for future contributions. Try adding support for CRUD operations on folders!
+After some time your access token will expire. You can refresh it by running `box setup` again.
