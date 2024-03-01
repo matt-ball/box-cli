@@ -13,4 +13,3 @@ function search (arg, options, subCommand) {
 }
 
 module.exports = search
- 

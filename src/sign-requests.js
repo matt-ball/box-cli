@@ -27,3 +27,5 @@ function signRequests (arg, options, subCommand) {
   const operation = operations[subCommand._name]
   operation(arg, options)
 }
+
+module.exports = signRequests
