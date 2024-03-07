@@ -1,17 +1,21 @@
 const client = require('./lib/client')
+const log = require('./lib/logger')
 
 const operations = {
   get: async (collectionID) => {
     const collection = await client.collections.get(collectionID)
-    console.log(collection)
+    log(collection)
+    return collection
   },
   getAll: async () => {
     const collections = await client.collections.getAll()
-    console.log(collections)
+    log(collections)
+    return collections
   },
   getItems: async (collectionID, { options }) => {
     const items = await client.collections.getItems(collectionID, options)
-    console.log(items)
+    log(items)
+    return items
   }
 }
 

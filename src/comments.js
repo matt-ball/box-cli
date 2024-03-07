@@ -1,25 +1,31 @@
 const client = require('./lib/client')
+const log = require('./lib/logger')
 
 const operations = {
   get: async (commentID) => {
     const comment = await client.comments.get(CommentID)
-    console.log(comment)
+    log(comment)
+    return comment
   },
   create: async (message, { fileId }) => {
     const comment = await client.comments.create(fileId, message)
-    console.log(comment)
+    log(comment)
+    return comment
   },
   delete: async (commentID) => {
     await client.comments.delete(commentID)
-    console.log('Comment deleted')
+    log('Comment deleted')
+    return 'Comment deleted'
   },
   update: async (commentID, { message }) => {
     const comment = await client.comments.update(commentID, message)
-    console.log(comment)
+    log(comment)
+    return comment
   },
   reply: async (commentID, { message }) => {
     const comment = await client.comments.reply(commentID, message)
-    console.log(comment)
+    log(comment)
+    return comment
   }
 }
 

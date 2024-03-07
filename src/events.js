@@ -1,21 +1,26 @@
 const client = require('./lib/client')
+const log = require('./lib/logger')
 
 const operations = {
   get: async (streamPosition) => {
     const stream = await client.events.get(streamPosition)
-    console.log(stream)
+    log(stream)
+    return stream
   },
   getLongPollInfo: async () => {
     const info = await client.events.getLongPollInfo()
-    console.log(info)
+    log(info)
+    return info
   },
   getEventStream: async (streamPosition, { options }) => {
     const stream = await client.events.getEventStream(streamPosition, options)
-    console.log(stream)
+    log(stream)
+    return stream
   },
   getEnterpriseEventStream: async (options) => {
     const stream = await client.events.getEnterpriseEventStream(options)
-    console.log(stream)
+    log(stream)
+    return stream
   }
 }
 

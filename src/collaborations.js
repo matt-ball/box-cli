@@ -3,19 +3,23 @@ const client = require('./lib/client')
 const operations = {
   get: async (collaborationID) => {
     const collaboration = await client.collaborations.get(collaborationID)
-    console.log(collaboration)
+    log(collaboration)
+    return collaboration
   },
   getPending: async () => {
     const collaborations = await client.collaborations.getPending()
-    console.log(collaborations)
+    log(collaborations)
+    return collaborations
   },
   update: async (collaborationID, { status }) => {
     const collaboration = await client.collaborations.update(collaborationID, { status })
-    console.log(collaboration)
+    log(collaboration)
+    return collaboration
   },
   delete: async (collaborationID) => {
     await client.collaborations.delete(collaborationID)
-    console.log('Collaboration deleted')
+    log('Collaboration deleted')
+    return 'Collaboration deleted'
   }
 }
 

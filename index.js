@@ -13,19 +13,36 @@ const collaborationAllowlist = program
   .description('collaboration allowlist commands')
 collaborationAllowlist
   .command('get <domainId>')
-  .description('get collaboration allowlist domain')
+  .description('get collaboration allowlist')
   .action(cmd('collaboration-allowlist'))
 collaborationAllowlist
-  .command('add <domain> <direction>')
-  .description('add collaboration allowlist domain')
+  .command('get-all')
+  .description('get all collaboration allowlists')
+  .action(cmd('collaboration-allowlist'))
+collaborationAllowlist
+  .command('add <domain>')
+  .description('add collaboration allowlist')
+  .option('-d, --direction <direction>', 'direction to add collaboration allowlist')
   .action(cmd('collaboration-allowlist'))
 collaborationAllowlist
   .command('remove <domainId>')
-  .description('remove collaboration allowlist domain')
+  .description('remove collaboration allowlist')
   .action(cmd('collaboration-allowlist'))
 collaborationAllowlist
-  .command('list')
-  .description('list collaboration allowlist domains')
+  .command('remove-exemption <exemptionId>')
+  .description('remove collaboration allowlist exemption')
+  .action(cmd('collaboration-allowlist'))
+collaborationAllowlist
+  .command('get-exemption <exemptionId>')
+  .description('get collaboration allowlist exemption')
+  .action(cmd('collaboration-allowlist'))
+collaborationAllowlist
+  .command('get-all-exemptions')
+  .description('get all collaboration allowlist exemptions')
+  .action(cmd('collaboration-allowlist'))
+collaborationAllowlist
+  .command('add-exemption <userId>')
+  .description('add collaboration allowlist exemption')
   .action(cmd('collaboration-allowlist'))
 
 const collaborations = program
@@ -131,10 +148,6 @@ fileRequests
   .description('get file request')
   .action(cmd('file-requests'))
 fileRequests
-  .command('get-all')
-  .description('get all file requests')
-  .action(cmd('file-requests'))
-fileRequests
   .command('create <name>')
   .description('create file request')
   .option('-p, --parent <parentFolderId>', 'parent folder id')
@@ -206,32 +219,55 @@ informationBarrierReports
   .description('get information barrier report')
   .action(cmd('information-barrier-reports'))
 informationBarrierReports
-  .command('get-all')
+  .command('get-all <barrierId>')
   .description('get all information barrier reports')
+  .action(cmd('information-barrier-reports'))
+informationBarrierReports
+  .command('create <barrierId>')
+  .description('create information barrier report')
+  .option('-t, --type <type>', 'type of information barrier report')
   .action(cmd('information-barrier-reports'))
 
 const informationBarrierSegmentMembers = program
   .command('information-barrier-segment-members')
   .description('information barrier segment member commands')
 informationBarrierSegmentMembers
-  .command('get <segmentId>')
+  .command('get <memberId>')
   .description('get information barrier segment member')
   .action(cmd('information-barrier-segment-members'))
 informationBarrierSegmentMembers
-  .command('get-all')
+  .command('get-all <segmentId>')
   .description('get all information barrier segment members')
+  .action(cmd('information-barrier-segment-members'))
+informationBarrierSegmentMembers
+  .command('create <segmentId>')
+  .description('create information barrier segment member')
+  .option('-u, --user <userId>', 'user id')
+  .action(cmd('information-barrier-segment-members'))
+informationBarrierSegmentMembers
+  .command('delete <memberId>')
+  .description('delete information barrier segment member')
   .action(cmd('information-barrier-segment-members'))
 
 const informationBarrierSegmentRestrictions = program
   .command('information-barrier-segment-restrictions')
   .description('information barrier segment restriction commands')
 informationBarrierSegmentRestrictions
-  .command('get <segmentId>')
+  .command('get <restrictionId>')
   .description('get information barrier segment restriction')
   .action(cmd('information-barrier-segment-restrictions'))
 informationBarrierSegmentRestrictions
-  .command('get-all')
+  .command('get-all <segmentId>')
   .description('get all information barrier segment restrictions')
+  .action(cmd('information-barrier-segment-restrictions'))
+informationBarrierSegmentRestrictions
+  .command('create <segmentId>')
+  .description('create information barrier segment restriction')
+  .option('-s, --restricted-segment <segmentId>', 'restricted segment id')
+  .action(cmd('information-barrier-segment-restrictions'))
+informationBarrierSegmentRestrictions
+  .command('delete <restrictionId>')
+  .description('delete information barrier segment restriction')
   .action(cmd('information-barrier-segment-restrictions'))
 
 const informationBarrierSegments = program
@@ -242,8 +278,24 @@ informationBarrierSegments
   .description('get information barrier segment')
   .action(cmd('information-barrier-segments'))
 informationBarrierSegments
-  .command('get-all')
+  .command('get-all <barrierId>')
   .description('get all information barrier segments')
+  .action(cmd('information-barrier-segments'))
+informationBarrierSegments
+  .command('create <barrierId>')
+  .description('create information barrier segment')
+  .option('-n, --name <name>', 'name of information barrier segment')
+  .option('-d, --description <description>', 'description of information barrier segment')
+  .action(cmd('information-barrier-segments'))
+informationBarrierSegments
+  .command('update <segmentId> <barrierId>')
+  .description('update information barrier segment')
+  .option('-n, --name <name>', 'name of information barrier segment')
+  .option('-d, --description <description>', 'description of information barrier segment')
+  .action(cmd('information-barrier-segments'))
+informationBarrierSegments
+  .command('delete <segmentId>')
+  .description('delete information barrier segment')
   .action(cmd('information-barrier-segments'))
 
 const informationBarrier = program
@@ -257,24 +309,37 @@ informationBarrier
   .command('get-all')
   .description('get all information barriers')
   .action(cmd('information-barriers'))
+informationBarrier
+  .command('create <barrierId>')
+  .description('create information barrier')
+  .action(cmd('information-barriers'))
+informationBarrier
+  .command('update <barrierId>')
+  .description('update information barrier')
+  .option('-s, --status <status>', 'status of information barrier')
+  .action(cmd('information-barriers'))
 
 const integrationMappings = program
   .command('integration-mappings')
   .description('integration mapping commands')
 integrationMappings
-  .command('get <mappingId>')
+  .command('get <mappingID>')
   .description('get integration mapping')
   .action(cmd('integration-mappings'))
 integrationMappings
-  .command('create <body>')
+  .command('create <boxFolderID>')
   .description('create integration mapping')
+  .option('-p, --partnerID <partnerID>', 'partner id')
+  .option('-o, --slackOrgID <slackOrgID>', 'slack org id')
   .action(cmd('integration-mappings'))
 integrationMappings
-  .command('update <mappingId> <body>')
+  .command('update <boxFolderID>')
   .description('update integration mapping')
+  .option('-m, --mappingID <mappingID>', 'mapping id')
+  .option('-d, --accessManagementDisabled <accessManagementDisabled>', 'access management disabled')
   .action(cmd('integration-mappings'))
 integrationMappings
-  .command('delete <mappingId>')
+  .command('delete <mappingID>')
   .description('delete integration mapping')
   .action(cmd('integration-mappings'))
 

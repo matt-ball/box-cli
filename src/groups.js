@@ -1,25 +1,31 @@
 const client = require('./lib/client')
+const log = require('./lib/logger')
 
 const operations = {
   get: async (groupID) => {
     const group = await client.groups.get(groupID)
-    console.log(group)
+    log(group)
+    return group
   },
   getAll: async () => {
     const groups = await client.groups.getAll()
-    console.log(groups)
+    log(groups)
+    return groups
   },
   getMemberships: async (groupID, { options }) => {
     const memberships = await client.groups.getMemberships(groupID, options)
-    console.log(memberships)
+    log(memberships)
+    return memberships
   },
   addUser: async (groupID, { userID }) => {
     const membership = await client.groups.addUser(groupID, userID)
-    console.log(membership)
+    log(membership)
+    return membership
   },
   getCollaborations: async (groupID, { options }) => {
     const collaborations = await client.groups.getCollaborations(groupID, options)
-    console.log(collaborations)
+    log(collaborations)
+    return collaborations
   }
 }
 

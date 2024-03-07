@@ -1,4 +1,5 @@
 const fs = require('fs')
+const camelize = require('./lib/camelize')
 const client = require('./lib/client')
 const log = require('./lib/logger')
 const handleError = require('./lib/handle-error')
@@ -24,7 +25,7 @@ const operations = {
     return file
   },
   delete: async (fileId) => {
-    const file = await client.files.delete(fileId)
+    await client.files.delete(fileId)
     log('File deleted!')
     return 'File deleted!'
   }
@@ -32,7 +33,8 @@ const operations = {
 
 async function file (arg, options, subCommand) {
   try {
-    const operation = operations[subCommand._name]
+    const name = subCommand ? subCommand._name : options._name
+    const operation = operations[camelize(name)]
     const result = await operation(arg, options)
 
     return result

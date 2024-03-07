@@ -1,17 +1,21 @@
 const client = require('./lib/client')
+const log = require('./lib/logger')
 
 const operations = {
   get: async (pinID) => {
     const pin = await client.devicePins.get(pinID)
-    console.log(pin)
+    log(pin)
+    return pin
   },
   getAll: async () => {
     const pins = await client.devicePins.getAll()
-    console.log(pins)
+    log(pins)
+    return pins
   },
   delete: async (pinID) => {
     await client.devicePins.delete(pinID)
-    console.log('Device pin deleted')
+    log('Device pin deleted')
+    return 'Device pin deleted'
   }
 }
 
