@@ -530,27 +530,10 @@ trash
   .description('delete trash item')
   .action(cmd('trash'))
 
-const weblinks = program
-  .command('weblinks')
-  .description('web link commands')
-weblinks
-  .command('get <weblinkID>')
-  .description('get web link')
-  .action(cmd('weblinks'))
-weblinks
-  .command('create <url>')
-  .description('create web link')
-  .option('-n, --name <name>', 'name of web link')
-  .option('-d, --description <description>', 'description of web link')
-  .action(cmd('weblinks'))
-weblinks
-  .command('update <weblinkID> <url>')
-  .description('update web link')
-  .action(cmd('weblinks'))
-weblinks
-  .command('delete <weblinkID>')
-  .description('delete web link')
-  .action(cmd('weblinks'))
+program
+  .command('user')
+  .description('user commands')
+  .action(cmd('user'))
 
 const webhooks = program
   .command('webhooks')
@@ -611,11 +594,6 @@ weblinks
   .command('delete <weblinkID>')
   .description('delete web link')
   .action(cmd('weblinks'))
-
-program
-  .command('user')
-  .description('user commands')
-  .action(cmd('user'))
 
 program.parse()
 
