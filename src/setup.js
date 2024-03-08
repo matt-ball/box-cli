@@ -30,7 +30,7 @@ async function auth (req, res, clientCreds, box) {
   const tokenInfo = await box.getTokensAuthorizationCodeGrant(code)
   const client = box.getPersistentClient(tokenInfo)
   const user = await client.users.get(client.CURRENT_USER_ID)
-  const success = `Successfully authenticated as ${user.name} (${user.login}).`
+  const success = `✅ Successfully authenticated as ${user.name} (${user.login}).`
   const html = `<p>${success}</p><p>You can close this window now.</p>`
   
   config.set({ tokenInfo , clientCreds })
@@ -45,7 +45,7 @@ function startServer (clientCreds, box, authUrl) {
   })
 
   app.listen(3000, () => {
-    log(`🚀 Go to ${authUrl} to authorize your Box account`)
+    log(`🚀 Go to ${authUrl} to authorize your Box account (CTRL/CMD + Click to open).`)
   })
 }
 
