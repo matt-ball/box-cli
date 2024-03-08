@@ -577,6 +577,41 @@ webhooks
   .description('delete webhook')
   .action(cmd('webhooks'))
 
+const weblinks = program
+  .command('weblinks')
+  .description('web link commands')
+weblinks
+  .command('get <weblinkID>')
+  .description('get web link')
+  .action(cmd('weblinks'))
+weblinks
+  .command('create <parentID>')
+  .description('create web link')
+  .option('-n, --name <name>', 'name of web link')
+  .option('-d, --description <description>', 'description of web link')
+  .option('-u, --url <url>', 'url of web link')
+  .action(cmd('weblinks'))
+weblinks
+  .command('update <weblinkID>')
+  .description('update web link')
+  .option('-n, --name <name>', 'name of web link')
+  .option('-d, --description <description>', 'description of web link')
+  .action(cmd('weblinks'))
+weblinks
+  .command('copy <weblinkID>')
+  .description('copy web link')
+  .option('-p, --parentID <parentID>', 'parent folder id')
+  .action(cmd('weblinks'))
+weblinks
+  .command('move <weblinkID>')
+  .description('move web link')
+  .option('-p, --parentID <parentID>', 'parent folder id')
+  .action(cmd('weblinks'))
+weblinks
+  .command('delete <weblinkID>')
+  .description('delete web link')
+  .action(cmd('weblinks'))
+
 program
   .command('user')
   .description('user commands')

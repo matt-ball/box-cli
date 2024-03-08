@@ -1,25 +1,31 @@
 const client = require('./lib/client')
+const log = require('./lib/logger')
 
 const operations = {
   get: async (webhookID) => {
     const webhook = await client.webhooks.get(webhookID)
-    console.log(webhook)
+    log(webhook)
+    return webhook
   },
   getAll: async () => {
     const webhooks = await client.webhooks.getAll()
-    console.log(webhooks)
+    log(webhooks)
+    return webhooks
   },
   create: async (url, { options }) => {
     const webhook = await client.webhooks.create(url, options)
-    console.log(webhook)
+    log(webhook)
+    return webhook
   },
   update: async (webhookID, { url }) => {
     const webhook = await client.webhooks.update(webhookID, url)
-    console.log(webhook)
+    log(webhook)
+    return webhook
   },
   delete: async (webhookID) => {
     await client.webhooks.delete(webhookID)
-    console.log('Webhook deleted')
+    log('Webhook deleted')
+    return 'Webhook deleted'
   }
 }
 

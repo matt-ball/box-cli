@@ -1,9 +1,11 @@
 const client = require('./lib/client')
+const log = require('./lib/logger')
 
 const operations = {
-  get: async (itemID) => {
-    const item = await client.recentItems.get(itemID)
-    console.log(item)
+  get: async (limit) => {
+    const item = await client.recentItems.get({ limit })
+    log(item)
+    return item
   }
 }
 

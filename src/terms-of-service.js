@@ -1,17 +1,21 @@
 const client = require('./lib/client')
+const log = require('./lib/logger')
 
 const operations = {
   get: async () => {
     const terms = await client.termsOfService.get()
-    console.log(terms)
+    log(terms)
+    return terms
   },
   accept: async () => {
     await client.termsOfService.setUserStatus(true)
-    console.log('Terms accepted')
+    log('Terms accepted')
+    return 'Terms accepted'
   },
   reject: async () => {
     await client.termsOfService.setUserStatus(false)
-    console.log('Terms rejected')
+    log('Terms rejected')
+    return 'Terms rejected'
   }
 }
 

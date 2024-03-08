@@ -3,6 +3,7 @@ const { prompt } = require('enquirer')
 const BoxSDK = require('box-node-sdk')
 const express = require('express')
 const config = require('./lib/config')
+const log = require('./lib/logger')
 const app = express()
 
 const questions = [
@@ -33,7 +34,7 @@ async function auth (req, res, clientCreds, box) {
   const html = `<p>${success}</p><p>You can close this window now.</p>`
   
   config.set({ tokenInfo , clientCreds })
-  console.log(success)
+  log(success)
   res.send(html)
   process.exit()
 }
@@ -44,7 +45,7 @@ function startServer (clientCreds, box, authUrl) {
   })
 
   app.listen(3000, () => {
-    console.log(`Go to ${authUrl} to authorize your Box account`)
+    log(`🚀 Go to ${authUrl} to authorize your Box account`)
   })
 }
 

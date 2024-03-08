@@ -1,9 +1,11 @@
 const client = require('./lib/client')
+const log = require('./lib/logger')
 
 const operations = {
   get: async (itemID) => {
     const item = await client.sharedItems.get(itemID)
-    console.log(item)
+    log(item)
+    return item
   }
 }
 

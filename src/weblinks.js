@@ -1,21 +1,36 @@
 const client = require('./lib/client')
+const log = require('./lib/logger')
 
 const operations = {
   get: async (weblinkID) => {
     const weblink = await client.weblinks.get(weblinkID)
-    console.log(weblink)
+    log(weblink)
+    return weblink
   },
-  create: async (url, { options }) => {
-    const weblink = await client.weblinks.create(url, options)
-    console.log(weblink)
+  create: async (parentID, { url, name, description }) => {
+    const weblink = await client.weblinks.create(url, parentID, { name, description })
+    log(weblink)
+    return weblink
   },
-  update: async (weblinkID, { url }) => {
-    const weblink = await client.weblinks.update(weblinkID, url)
-    console.log(weblink)
+  update: async (weblinkID, { name, description }) => {
+    const weblink = await client.weblinks.update(weblinkID, { name, description })
+    log(weblink)
+    return weblink
+  },
+  copy: async (weblinkID, { parentID }) => {
+    const weblink = await client.weblinks.copy(weblinkID, parentID)
+    log(weblink)
+    return weblink
+  },
+  move: async (weblinkID, { parentID }) => {
+    const weblink = await client.weblinks.move(weblinkID, parentID)
+    log(weblink)
+    return weblink
   },
   delete: async (weblinkID) => {
     await client.weblinks.delete(weblinkID)
-    console.log('Weblink deleted')
+    log('Weblink deleted')
+    return 'Weblink deleted'
   }
 }
 

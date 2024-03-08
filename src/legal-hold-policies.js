@@ -1,21 +1,26 @@
 const client = require('./lib/client')
+const log = require('./lib/logger')
 
 const operations = {
   get: async (policyID) => {
     const policy = await client.legalHoldPolicies.get(policyID)
-    console.log(policy)
+    log(policy)
+    return policy
   },
   create: async (policyName, { options }) => {
     const policy = await client.legalHoldPolicies.create(policyName, options)
-    console.log(policy)
+    log(policy)
+    return policy
   },
   update: async (policyID, { policyName }) => {
     const policy = await client.legalHoldPolicies.update(policyID, policyName)
-    console.log(policy)
+    log(policy)
+    return policy
   },
   delete: async (policyID) => {
     await client.legalHoldPolicies.delete(policyID)
-    console.log('Policy deleted')
+    log('Policy deleted')
+    return 'Policy deleted'
   }
 }
 

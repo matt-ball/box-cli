@@ -1,17 +1,21 @@
 const client = require('./lib/client')
+const log = require('./lib/logger')
 
 const operations = {
   get: async (itemID) => {
     const item = await client.trash.get(itemID)
-    console.log(item)
+    log(item)
+    return item
   },
   restore: async (itemID) => {
     await client.trash.restore(itemID)
-    console.log('Item restored')
+    log('Item restored')
+    return 'Item restored'
   },
   delete: async (itemID) => {
     await client.trash.delete(itemID)
-    console.log('Item deleted')
+    log('Item deleted')
+    return 'Item deleted'
   }
 }
 

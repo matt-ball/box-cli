@@ -1,13 +1,16 @@
 const client = require('./lib/client')
+const log = require('./lib/logger')
 
 const operations = {
   get: async (templateID) => {
     const template = await client.signTemplates.getById({ template_id: templateID })
-    console.log(template)
+    log(template)
+    return template
   },
   getAll: async () => {
     const templates = await client.signTemplates.getAll()
-    console.log(templates)
+    log(templates)
+    return templates
   }
 }
 

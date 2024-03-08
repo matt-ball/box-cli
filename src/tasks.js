@@ -1,21 +1,26 @@
 const client = require('./lib/client')
+const log = require('./lib/logger')
 
 const operations = {
   get: async (taskID) => {
     const task = await client.tasks.get(taskID)
-    console.log(task)
+    log(task)
+    return task
   },
   create: async (fileID, { options }) => {
     const task = await client.tasks.create(fileID, options)
-    console.log(task)
+    log(task)
+    return task
   },
   update: async (taskID, { name }) => {
     const task = await client.tasks.update(taskID, name)
-    console.log(task)
+    log(task)
+    return task
   },
   delete: async (taskID) => {
     await client.tasks.delete(taskID)
-    console.log('Task deleted')
+    log('Task deleted')
+    return 'Task deleted'
   }
 }
 
