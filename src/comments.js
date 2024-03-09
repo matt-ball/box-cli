@@ -1,4 +1,6 @@
+const camelize = require('./lib/camelize')
 const client = require('./lib/client')
+const handleError = require('./lib/handle-error')
 const log = require('./lib/logger')
 
 const operations = {
@@ -7,8 +9,13 @@ const operations = {
     log(comment)
     return comment
   },
-  create: async (message, { fileID }) => {
-    const comment = await client.comments.create(fileID, message)
+  getComments: async (fileID) => {
+    const comments = await client.files.getComments(fileID)
+    log(comments)
+    return comments
+  },
+  create: async (message, { file }) => {
+    const comment = await client.comments.create(file, message)
     log(comment)
     return comment
   },
@@ -17,23 +24,27 @@ const operations = {
     log('Comment deleted')
     return 'Comment deleted'
   },
-  update: async (message, { commentID }) => {
-    const comment = await client.comments.update(commentID, { message })
-    log(comment)
-    return comment
+  update: async (message, { comment }) => {
+    const result = await client.comments.update(comment, { message })
+    log(result)
+    return result
   },
-  reply: async (message, { commentID }) => {
-    const comment = await client.comments.reply(commentID, message)
-    log(comment)
-    return comment
+  reply: async (message, { comment }) => {
+    const result = await client.comments.reply(comment, message)
+    log(result)
+    return result
   }
 }
 
 async function comments (arg, options, subCommand) {
-  const operation = operations[subCommand._name]
-  const result = await operation(arg, options)
+  try {
+    const operation = operations[camelize(subCommand._name)]
+    const result = await operation(arg, options)
 
-  return result
+    return result
+  } catch (err) {
+    handleError(err)
+  }
 }
 
 module.exports = comments

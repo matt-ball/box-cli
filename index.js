@@ -86,6 +86,10 @@ comments
   .description('get comment')
   .action(cmd('comments'))
 comments
+  .command('get-comments <fileID>')
+  .description('get comments')
+  .action(cmd('comments'))
+comments
   .command('create <message>')
   .description('create comment')
   .option('-f, --file <fileID>', 'file id')
