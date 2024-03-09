@@ -1,4 +1,5 @@
 const fs = require('fs')
+const chalk = require('chalk')
 const { prompt } = require('enquirer')
 const BoxSDK = require('box-node-sdk')
 const express = require('express')
@@ -45,7 +46,7 @@ function startServer (clientCreds, box, authUrl) {
   })
 
   app.listen(3000, () => {
-    log(`🚀 Go to ${authUrl} to authorize your Box account (CTRL/CMD + Click to open).`)
+    log(`🚀 Go to ${chalk.bold(authUrl)} to authorize your Box account ${chalk.gray('(CTRL/CMD + Click to Open)')}.`)
   })
 }
 
