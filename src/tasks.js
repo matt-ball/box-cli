@@ -7,13 +7,8 @@ const operations = {
     log(task)
     return task
   },
-  create: async (fileID, { options }) => {
-    const task = await client.tasks.create(fileID, options)
-    log(task)
-    return task
-  },
-  update: async (taskID, { name }) => {
-    const task = await client.tasks.update(taskID, name)
+  update: async (taskID, { updates }) => {
+    const task = await client.tasks.update(taskID, { updates })
     log(task)
     return task
   },
@@ -24,9 +19,11 @@ const operations = {
   }
 }
 
-function tasks (arg, options, subCommand) {
+async function tasks (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = tasks

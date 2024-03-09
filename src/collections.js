@@ -7,11 +7,6 @@ const operations = {
     log(collection)
     return collection
   },
-  getAll: async () => {
-    const collections = await client.collections.getAll()
-    log(collections)
-    return collections
-  },
   getItems: async (collectionID, { options }) => {
     const items = await client.collections.getItems(collectionID, options)
     log(items)
@@ -19,9 +14,11 @@ const operations = {
   }
 }
 
-function collections (arg, options, subCommand) {
+async function collections (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = collections

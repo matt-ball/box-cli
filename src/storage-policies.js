@@ -7,18 +7,13 @@ const operations = {
     log(policy)
     return policy
   },
-  getAll: async () => {
-    const policies = await client.storagePolicies.getAll()
-    log(policies)
-    return policies
-  },
-  create: async (policyName, { options }) => {
-    const policy = await client.storagePolicies.createAssignment(policyName, options)
+  create: async (userID, { policyID }) => {
+    const policy = await client.storagePolicies.createAssignment(policyID, userID)
     log(policy)
     return policy
   },
-  update: async (policyID, { policyName }) => {
-    const policy = await client.storagePolicies.updateAssignment(policyID, policyName)
+  update: async (policyID, { updates }) => {
+    const policy = await client.storagePolicies.updateAssignment(policyID, { updates })
     log(policy)
     return policy
   },
@@ -29,9 +24,11 @@ const operations = {
   }
 }
 
-function storagePolicies (arg, options, subCommand) {
+async function storagePolicies (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = storagePolicies

@@ -12,7 +12,7 @@ const operations = {
     return collaborations
   },
   update: async (collaborationID, { status }) => {
-    const collaboration = await client.collaborations.update(collaborationID, { status })
+    const collaboration = await client.collaborations.update(collaborationID, s)
     log(collaboration)
     return collaboration
   },
@@ -23,9 +23,11 @@ const operations = {
   }
 }
 
-function collaborations (arg, options, subCommand) {
+async function collaborations (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = collaborations

@@ -24,9 +24,11 @@ const operations = {
   }
 }
 
-function events (arg, options, subCommand) {
+async function events (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = events

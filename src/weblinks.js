@@ -7,23 +7,13 @@ const operations = {
     log(weblink)
     return weblink
   },
-  create: async (parentID, { url, name, description }) => {
+  create: async (name, { parentID, url, description }) => {
     const weblink = await client.weblinks.create(url, parentID, { name, description })
     log(weblink)
     return weblink
   },
   update: async (weblinkID, { name, description }) => {
     const weblink = await client.weblinks.update(weblinkID, { name, description })
-    log(weblink)
-    return weblink
-  },
-  copy: async (weblinkID, { parentID }) => {
-    const weblink = await client.weblinks.copy(weblinkID, parentID)
-    log(weblink)
-    return weblink
-  },
-  move: async (weblinkID, { parentID }) => {
-    const weblink = await client.weblinks.move(weblinkID, parentID)
     log(weblink)
     return weblink
   },
@@ -34,9 +24,11 @@ const operations = {
   }
 }
 
-function weblinks (arg, options, subCommand) {
+async function weblinks (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = weblinks

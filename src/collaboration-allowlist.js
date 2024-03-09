@@ -9,11 +9,6 @@ const operations = {
     log(domain)
     return domain
   },
-  getAll: async (limit) => {
-    const domains = await client.collaborationAllowlist.getAllAllowlistedDomains({ limit })
-    log(domains)
-    return domains
-  },
   add: async (newDomain, { direction }) => {
     const domain = await client.collaborationAllowlist.addDomain(newDomain, direction)
     log(domain)

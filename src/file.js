@@ -1,10 +1,15 @@
 const fs = require('fs')
 const camelize = require('./lib/camelize')
 const client = require('./lib/client')
-const log = require('./lib/logger')
 const handleError = require('./lib/handle-error')
+const log = require('./lib/logger')
 
 const operations = {
+  create: async (name, { parentID }) => {
+    const file = await client.files.create(parentID, name)
+    log(file)
+    return file
+  },
   get: async (fileId) => {
     const file = await client.files.get(fileId)
     log(file)

@@ -7,11 +7,6 @@ const operations = {
     log(pin)
     return pin
   },
-  getAll: async () => {
-    const pins = await client.devicePins.getAll()
-    log(pins)
-    return pins
-  },
   delete: async (pinID) => {
     await client.devicePins.delete(pinID)
     log('Device pin deleted')
@@ -19,9 +14,11 @@ const operations = {
   }
 }
 
-function devicePins (arg, options, subCommand) {
+async function devicePins (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = devicePins

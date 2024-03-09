@@ -3,7 +3,7 @@ const log = require('./lib/logger')
 
 const operations = {
   getUsers: async (options) => {
-    const users = await client.enterprise.getUsers(options)
+    const users = await client.enterprise.getUsers({ options })
     log(users)
     return users
   },
@@ -12,8 +12,8 @@ const operations = {
     log(invite)
     return invite
   },
-  createUser: async (login, { name }) => {
-    const user = await client.enterprise.addUser(login, name)
+  createUser: async (name, { email }) => {
+    const user = await client.enterprise.addUser(email, name)
     log(user)
     return user
   },
@@ -29,9 +29,11 @@ const operations = {
   }
 }
 
-function enterprise (arg, options, subCommand) {
+async function enterprise (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = enterprise

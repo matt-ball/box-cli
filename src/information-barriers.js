@@ -8,11 +8,6 @@ const operations = {
     })
     log(barrier)
   },
-  getAll: async () => {
-    const barriers = await client.shieldInformationBarriers.getAll()
-    log(barriers)
-    return barriers
-  },
   create: async (barrierID) => {
     const barrier = await client.shieldInformationBarriers.create({
       enterprise: {
@@ -35,9 +30,11 @@ const operations = {
   }
 }
 
-function informationBarriers (arg, options, subCommand) {
+async function informationBarriers (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = informationBarriers

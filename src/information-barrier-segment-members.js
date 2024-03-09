@@ -9,12 +9,6 @@ const operations = {
     log(segment)
     return segment
   },
-  getAll: async (segmentID) => {
-    const segments = await client.shieldInformationBarrierSegmentMembers.getAll({
-      shield_information_barrier_segment_id: segmentID
-    })
-    log(segments)
-  },
   create: async (segmentID, { userID }) => {
     const segment = await client.shieldInformationBarrierSegmentMembers.create({
       shield_information_barrier_segment: {
@@ -38,9 +32,11 @@ const operations = {
   }
 }
 
-function informationBarrierSegmentMembers (arg, options, subCommand) {
+async function informationBarrierSegmentMembers (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = informationBarrierSegmentMembers

@@ -7,13 +7,8 @@ const operations = {
     log(file)
     return file
   },
-  getAll: async () => {
-    const files = await client.signRequests.getAll()
-    log(files)
-    return files
-  },
-  create: async (name, { parent }) => {
-    const file = await client.signRequests.create(parent, name)
+  create: async (name, { parentID }) => {
+    const file = await client.signRequests.create(parentID, name)
     log(file)
     return file
   },
@@ -29,9 +24,11 @@ const operations = {
   }
 }
 
-function signRequests (arg, options, subCommand) {
+async function signRequests (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = signRequests

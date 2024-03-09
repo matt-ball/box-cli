@@ -12,8 +12,8 @@ const operations = {
     log(template)
     return template
   },
-  update: async (templateID, operations) => {
-    const template = await client.metadata.updateTemplate(templateID, operations)
+  update: async (scope, { template, operations }) => {
+    const template = await client.metadata.updateTemplate(scope, template, operations)
     log(template)
     return template
   },
@@ -49,9 +49,11 @@ const operations = {
   }
 }
 
-function metadata (arg, options, subCommand) {
+async function metadata (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = metadata

@@ -7,18 +7,13 @@ const operations = {
     log(webhook)
     return webhook
   },
-  getAll: async () => {
-    const webhooks = await client.webhooks.getAll()
-    log(webhooks)
-    return webhooks
-  },
-  create: async (url, { options }) => {
-    const webhook = await client.webhooks.create(url, options)
+  create: async (targetType, { targetID }) => {
+    const webhook = await client.webhooks.create(targetID, targetType)
     log(webhook)
     return webhook
   },
-  update: async (webhookID, { url }) => {
-    const webhook = await client.webhooks.update(webhookID, url)
+  update: async (webhookID, { address }) => {
+    const webhook = await client.webhooks.update(webhookID, { address })
     log(webhook)
     return webhook
   },
@@ -29,9 +24,11 @@ const operations = {
   }
 }
 
-function webhooks (arg, options, subCommand) {
+async function webhooks (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = webhooks

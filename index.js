@@ -78,16 +78,39 @@ collections
   .description('get collection items')
   .action(cmd('collections'))
 
+const comments = program
+  .command('comments')
+  .description('comments commands')
+comments
+  .command('get <commentID>')
+  .description('get comment')
+  .action(cmd('comments'))
+comments
+  .command('create <message>')
+  .description('create comment')
+  .option('-f, --file <fileID>', 'file id')
+  .action(cmd('comments'))
+comments
+  .command('delete <commentID>')
+  .description('delete comment')
+  .action(cmd('comments'))
+comments
+  .command('update <message>')
+  .description('update comment')
+  .option('-c, --comment <commentID>', 'comment id')
+  .action(cmd('comments'))
+comments
+  .command('reply <message>')
+  .description('reply to comment')
+  .option('-c, --comment <commentID>', 'comment id')
+  .action(cmd('comments'))
+
 const devicePins = program
   .command('device-pins')
   .description('device pin commands')
 devicePins
   .command('get <pinId>')
   .description('get device pin')
-  .action(cmd('device-pins'))
-devicePins
-  .command('get-all')
-  .description('get all device pins')
   .action(cmd('device-pins'))
 devicePins
   .command('delete <pinId>')
@@ -106,9 +129,9 @@ enterprise
   .description('invite user to enterprise')
   .action(cmd('enterprise'))
 enterprise
-  .command('create-user <login> <name>')
+  .command('create-user <name>')
   .description('create user in enterprise')
-  .option('-r, --role <role>', 'role to create user with')
+  .option('-e, --email <email>', 'email to create user with')
   .action(cmd('enterprise'))
 enterprise
   .command('create-app-user <name>')
@@ -148,17 +171,14 @@ fileRequests
   .description('get file request')
   .action(cmd('file-requests'))
 fileRequests
-  .command('create <name>')
-  .description('create file request')
-  .option('-p, --parent <parentFolderId>', 'parent folder id')
-  .action(cmd('file-requests'))
-fileRequests
-  .command('copy <fileRequestIdToCopy>')
+  .command('copy <options>')
   .description('copy file request')
+  .option('-f, --file-request <fileRequestID>', 'file request id')
   .action(cmd('file-requests'))
 fileRequests
-  .command('update <fileRequestId>')
+  .command('update <options>')
   .description('update file request')
+  .option('-f, --file-request <fileRequestID>', 'file request id')
   .action(cmd('file-requests'))
 fileRequests
   .command('delete <fileRequestId>')
@@ -195,16 +215,13 @@ groups
   .description('get group')
   .action(cmd('groups'))
 groups
-  .command('get-all')
-  .description('get all groups')
-  .action(cmd('groups'))
-groups
   .command('get-memberships <groupId>')
   .description('get group memberships')
   .action(cmd('groups'))
 groups
-  .command('add-user <groupId> <userId>')
+  .command('add-user <userId>')
   .description('add user to group')
+  .option('-g, --group <groupId>', 'group id')
   .action(cmd('groups'))
 groups
   .command('get-collaborations <groupId>')
@@ -217,10 +234,6 @@ const informationBarrierReports = program
 informationBarrierReports
   .command('get <reportId>')
   .description('get information barrier report')
-  .action(cmd('information-barrier-reports'))
-informationBarrierReports
-  .command('get-all <barrierId>')
-  .description('get all information barrier reports')
   .action(cmd('information-barrier-reports'))
 informationBarrierReports
   .command('create <barrierId>')
@@ -306,10 +319,6 @@ informationBarrier
   .description('get information barrier')
   .action(cmd('information-barriers'))
 informationBarrier
-  .command('get-all')
-  .description('get all information barriers')
-  .action(cmd('information-barriers'))
-informationBarrier
   .command('create <barrierId>')
   .description('create information barrier')
   .action(cmd('information-barriers'))
@@ -351,9 +360,9 @@ legalHoldPolicies
   .description('get legal hold policy')
   .action(cmd('legal-hold-policies'))
 legalHoldPolicies
-  .command('create <policyName>')
+  .command('create <description>')
   .description('create legal hold policy')
-  .option('-d, --description <description>', 'description of legal hold policy')
+  .option('-n, --policyName <policyName>', 'policy name')
   .action(cmd('legal-hold-policies'))
 legalHoldPolicies
   .command('update <policyId> <policyName>')
@@ -380,14 +389,9 @@ retentionPolicies
   .description('get retention policy')
   .action(cmd('retention-policies'))
 retentionPolicies
-  .command('get-all')
-  .description('get all retention policies')
-  .action(cmd('retention-policies'))
-retentionPolicies
-  .command('create <policyName>')
+  .command('create <type>')
   .description('create retention policy')
-  .option('-t, --type <type>', 'retention policy type')
-  .option('-a, --action <action>', 'retention policy action')
+  .option('-n, --policyName <policyName>', 'policy name')
   .action(cmd('retention-policies'))
 retentionPolicies
   .command('update <policyId> <policyName>')
@@ -422,13 +426,9 @@ signRequests
   .description('get sign request')
   .action(cmd('sign-requests'))
 signRequests
-  .command('get-all')
-  .description('get all sign requests')
-  .action(cmd('sign-requests'))
-signRequests
-  .command('create <name> <parent>')
+  .command('create <name>')
   .description('create sign request')
-  .option('-f, --file <fileID>', 'file id')
+  .option('-p, --parentID <parentID>', 'parent id')
   .action(cmd('sign-requests'))
 signRequests
   .command('cancel <fileID>')
@@ -459,13 +459,9 @@ storagePolicies
   .description('get storage policy')
   .action(cmd('storage-policies'))
 storagePolicies
-  .command('get-all')
-  .description('get all storage policies')
-  .action(cmd('storage-policies'))
-storagePolicies
-  .command('create <policyName>')
+  .command('create <userID>')
   .description('create storage policy')
-  .option('-d, --description <description>', 'description of storage policy')
+  .option('-p, --policyID <policyID>', 'policy id')
   .action(cmd('storage-policies'))
 storagePolicies
   .command('update <policyID> <policyName>')
@@ -484,14 +480,10 @@ tasks
   .description('get task')
   .action(cmd('tasks'))
 tasks
-  .command('create <fileID>')
-  .description('create task')
-  .option('-m, --message <message>', 'message for task')
-  .option('-d, --due-at <dueAt>', 'due date for task')
-  .action(cmd('tasks'))
-tasks
-  .command('update <taskID> <name>')
+  .command('update <taskID>')
   .description('update task')
+  .option('-n, --name <name>', 'name of task')
+  .option('-d, --description <description>', 'description of task')
   .action(cmd('tasks'))
 tasks
   .command('delete <taskID>')
@@ -543,13 +535,9 @@ webhooks
   .description('get webhook')
   .action(cmd('webhooks'))
 webhooks
-  .command('get-all')
-  .description('get all webhooks')
-  .action(cmd('webhooks'))
-webhooks
-  .command('create <url>')
+  .command('create <targetType>')
   .description('create webhook')
-  .option('-t, --triggers <triggers>', 'triggers for webhook')
+  .option('-t, --targetID <targetID>', 'target id')
   .action(cmd('webhooks'))
 webhooks
   .command('update <webhookID> <url>')
@@ -568,27 +556,17 @@ weblinks
   .description('get web link')
   .action(cmd('weblinks'))
 weblinks
-  .command('create <parentID>')
+  .command('create <name>')
   .description('create web link')
-  .option('-n, --name <name>', 'name of web link')
-  .option('-d, --description <description>', 'description of web link')
+  .option('-p, --parentID <parentID>', 'parent folder id')
   .option('-u, --url <url>', 'url of web link')
+  .option('-d, --description <description>', 'description of web link')
   .action(cmd('weblinks'))
 weblinks
   .command('update <weblinkID>')
   .description('update web link')
   .option('-n, --name <name>', 'name of web link')
   .option('-d, --description <description>', 'description of web link')
-  .action(cmd('weblinks'))
-weblinks
-  .command('copy <weblinkID>')
-  .description('copy web link')
-  .option('-p, --parentID <parentID>', 'parent folder id')
-  .action(cmd('weblinks'))
-weblinks
-  .command('move <weblinkID>')
-  .description('move web link')
-  .option('-p, --parentID <parentID>', 'parent folder id')
   .action(cmd('weblinks'))
 weblinks
   .command('delete <weblinkID>')

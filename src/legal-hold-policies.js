@@ -7,13 +7,13 @@ const operations = {
     log(policy)
     return policy
   },
-  create: async (policyName, { options }) => {
-    const policy = await client.legalHoldPolicies.create(policyName, options)
+  create: async (description, { policyName }) => {
+    const policy = await client.legalHoldPolicies.create(policyName, description)
     log(policy)
     return policy
   },
-  update: async (policyID, { policyName }) => {
-    const policy = await client.legalHoldPolicies.update(policyID, policyName)
+  update: async (policyID, { description }) => {
+    const policy = await client.legalHoldPolicies.update(policyID, { description })
     log(policy)
     return policy
   },
@@ -24,9 +24,11 @@ const operations = {
   }
 }
 
-function legalHoldPolicies (arg, options, subCommand) {
+async function legalHoldPolicies (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = legalHoldPolicies

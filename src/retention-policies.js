@@ -7,18 +7,13 @@ const operations = {
     log(policy)
     return policy
   },
-  getAll: async () => {
-    const policies = await client.retentionPolicies.getAll()
-    log(policies)
-    return policies
-  },
-  create: async (policyName, { options }) => {
-    const policy = await client.retentionPolicies.create(policyName, options)
+  create: async (type, { policyName }) => {
+    const policy = await client.retentionPolicies.create(policyName, type)
     log(policy)
     return policy
   },
-  update: async (policyID, { policyName }) => {
-    const policy = await client.retentionPolicies.update(policyID, policyName)
+  update: async (policyID, { updates }) => {
+    const policy = await client.retentionPolicies.update(policyID, { updates })
     log(policy)
     return policy
   },
@@ -29,9 +24,11 @@ const operations = {
   }
 }
 
-function retentionPolicies (arg, options, subCommand) {
+async function retentionPolicies (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = retentionPolicies

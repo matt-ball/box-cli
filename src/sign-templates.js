@@ -14,9 +14,11 @@ const operations = {
   }
 }
 
-function signTemplates (arg, options, subCommand) {
+async function signTemplates (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = signTemplates

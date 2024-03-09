@@ -7,17 +7,12 @@ const operations = {
     log(group)
     return group
   },
-  getAll: async () => {
-    const groups = await client.groups.getAll()
-    log(groups)
-    return groups
-  },
   getMemberships: async (groupID, { options }) => {
     const memberships = await client.groups.getMemberships(groupID, options)
     log(memberships)
     return memberships
   },
-  addUser: async (groupID, { userID }) => {
+  addUser: async (userID, { groupID }) => {
     const membership = await client.groups.addUser(groupID, userID)
     log(membership)
     return membership
@@ -29,9 +24,11 @@ const operations = {
   }
 }
 
-function groups (arg, options, subCommand) {
+async function groups (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = groups

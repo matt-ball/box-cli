@@ -19,9 +19,11 @@ const operations = {
   }
 }
 
-function termsOfService (arg, options, subCommand) {
+async function termsOfService (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = termsOfService

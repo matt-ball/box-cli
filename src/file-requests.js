@@ -7,13 +7,13 @@ const operations = {
     log(fileRequest)
     return fileRequest
   },
-  copy: async (fileRequestIdToCopy, { copyRequest }) => {
-    const fileRequest = await client.fileRequests.copy(fileRequestIdToCopy, copyRequest)
+  copy: async (options, { fileRequestID }) => {
+    const fileRequest = await client.fileRequests.copy(fileRequestID, { options })
     log(fileRequest)
     return fileRequest
   },
-  update: async (fileRequestId, { fileRequestChange }) => {
-    const fileRequest = await client.fileRequests.update(fileRequestId, fileRequestChange)
+  update: async (options, { fileRequestID }) => {
+    const fileRequest = await client.fileRequests.update(fileRequestID, { options })
     log(fileRequest)
     return fileRequest
   },
@@ -24,9 +24,11 @@ const operations = {
   }
 }
 
-function fileRequests (arg, options, subCommand) {
+async function fileRequests (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = fileRequests

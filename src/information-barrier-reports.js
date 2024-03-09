@@ -9,13 +9,6 @@ const operations = {
     log(report)
     return report
   },
-  getAll: async (id) => {
-    const reports = await client.informationBarrierReports.getAll({
-      shield_information_barrier_id: id
-    })
-    log(reports)
-    return reports
-  },
   create: async (id, { type }) => {
     const report = await client.informationBarrierReports.create({
       shield_information_barrier_id: id,
@@ -26,9 +19,11 @@ const operations = {
   }
 }
 
-function informationBarrierReports (arg, options, subCommand) {
+async function informationBarrierReports (arg, options, subCommand) {
   const operation = operations[subCommand._name]
-  operation(arg, options)
+  const result = await operation(arg, options)
+
+  return result
 }
 
 module.exports = informationBarrierReports
