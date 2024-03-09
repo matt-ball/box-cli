@@ -7,6 +7,8 @@ let id
 test('can upload a file', async () => {
   const filepath = path.join(__dirname, './data/logo.png')
   const result = await file(filepath, { folder: '0' }, { _name: 'upload' })
+  // only files have entries that we must inspect
+  // other methods can do result.id for example
   const data = result.entries[0]
   id = data.id
   
