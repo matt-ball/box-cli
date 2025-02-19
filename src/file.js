@@ -18,9 +18,16 @@ const operations = {
   download: async (fileId, { path }) => {
     const stream = await client.files.getReadStream(fileId)
     const output = fs.createWriteStream(path)
-    stream.pipe(output)
-    log('Download complete!')
-    return stream
+    
+    return new Promise((resolve, reject) => {
+      stream.pipe(output)
+      output.on('finish', () => {
+        log('Download complete!')
+        resolve('Download complete!')
+      })
+      output.on('error', reject)
+      stream.on('error', reject)
+    })
   },
   upload: async (path, { folder }) => {
     const stream = fs.createReadStream(path)
