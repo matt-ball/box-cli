@@ -133,12 +133,12 @@ enterprise
   .description('invite user to enterprise')
   .action(cmd('enterprise'))
 enterprise
-  .command('create-user <name>')
+  .command('create-user <n>')
   .description('create user in enterprise')
   .option('-e, --email <email>', 'email to create user with')
   .action(cmd('enterprise'))
 enterprise
-  .command('create-app-user <name>')
+  .command('create-app-user <n>')
   .description('create app user in enterprise')
   .option('-o, --options <options>', 'options to create app user with')
   .action(cmd('enterprise'))
@@ -210,6 +210,36 @@ file
   .command('delete <fileId>')
   .description('delete file')
   .action(cmd('file'))
+
+const folders = program
+  .command('folders')
+  .description('folder commands')
+folders
+  .command('get <folderId>')
+  .description('get folder')
+  .action(cmd('folders'))
+folders
+  .command('get-items <folderId>')
+  .description('get items in folder')
+  .option('-l, --limit <limit>', 'limit number of items returned')
+  .option('-o, --offset <offset>', 'offset for pagination')
+  .action(cmd('folders'))
+folders
+  .command('create <name>')
+  .description('create folder')
+  .option('-p, --parent <parentId>', 'parent folder id')
+  .action(cmd('folders'))
+folders
+  .command('update <folderId>')
+  .description('update folder')
+  .option('-n, --name <name>', 'new name for folder')
+  .option('-d, --description <description>', 'new description for folder')
+  .action(cmd('folders'))
+folders
+  .command('delete <folderId>')
+  .description('delete folder')
+  .option('-r, --recursive', 'delete folder recursively')
+  .action(cmd('folders'))
 
 const groups = program
   .command('groups')
@@ -301,13 +331,13 @@ informationBarrierSegments
 informationBarrierSegments
   .command('create <barrierId>')
   .description('create information barrier segment')
-  .option('-n, --name <name>', 'name of information barrier segment')
+  .option('-n, --name <n>', 'name of information barrier segment')
   .option('-d, --description <description>', 'description of information barrier segment')
   .action(cmd('information-barrier-segments'))
 informationBarrierSegments
   .command('update <segmentId> <barrierId>')
   .description('update information barrier segment')
-  .option('-n, --name <name>', 'name of information barrier segment')
+  .option('-n, --name <n>', 'name of information barrier segment')
   .option('-d, --description <description>', 'description of information barrier segment')
   .action(cmd('information-barrier-segments'))
 informationBarrierSegments
@@ -430,7 +460,7 @@ signRequests
   .description('get sign request')
   .action(cmd('sign-requests'))
 signRequests
-  .command('create <name>')
+  .command('create <n>')
   .description('create sign request')
   .option('-p, --parentID <parentID>', 'parent id')
   .action(cmd('sign-requests'))
@@ -486,7 +516,7 @@ tasks
 tasks
   .command('update <taskID>')
   .description('update task')
-  .option('-n, --name <name>', 'name of task')
+  .option('-n, --name <n>', 'name of task')
   .option('-d, --description <description>', 'description of task')
   .action(cmd('tasks'))
 tasks
@@ -560,7 +590,7 @@ weblinks
   .description('get web link')
   .action(cmd('weblinks'))
 weblinks
-  .command('create <name>')
+  .command('create <n>')
   .description('create web link')
   .option('-p, --parentID <parentID>', 'parent folder id')
   .option('-u, --url <url>', 'url of web link')
@@ -569,7 +599,7 @@ weblinks
 weblinks
   .command('update <weblinkID>')
   .description('update web link')
-  .option('-n, --name <name>', 'name of web link')
+  .option('-n, --name <n>', 'name of web link')
   .option('-d, --description <description>', 'description of web link')
   .action(cmd('weblinks'))
 weblinks
