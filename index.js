@@ -211,6 +211,46 @@ file
   .description('delete file')
   .action(cmd('file'))
 
+const folders = program
+  .command('folders')
+  .description('folder commands')
+folders
+  .command('get <folderId>')
+  .description('get folder information')
+  .action(cmd('folders'))
+folders
+  .command('get-items <folderId>')
+  .description('get items in a folder')
+  .option('-l, --limit <limit>', 'maximum number of items to return')
+  .action(cmd('folders'))
+folders
+  .command('create <name>')
+  .description('create a new folder')
+  .option('-p, --parent-id <parentId>', 'parent folder id')
+  .action(cmd('folders'))
+folders
+  .command('update <folderId>')
+  .description('update folder information')
+  .option('-n, --name <name>', 'new name for the folder')
+  .option('-d, --description <description>', 'new description for the folder')
+  .action(cmd('folders'))
+folders
+  .command('delete <folderId>')
+  .description('delete a folder')
+  .option('-r, --recursive <recursive>', 'delete folder recursively', true)
+  .action(cmd('folders'))
+folders
+  .command('copy <folderId>')
+  .description('copy a folder')
+  .option('-d, --dest-folder-id <destFolderId>', 'destination folder id')
+  .option('-n, --name <name>', 'new name for the copied folder')
+  .action(cmd('folders'))
+folders
+  .command('move <folderId>')
+  .description('move a folder')
+  .option('-d, --dest-folder-id <destFolderId>', 'destination folder id')
+  .action(cmd('folders'))
+
 const groups = program
   .command('groups')
   .description('groups commands')
