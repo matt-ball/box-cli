@@ -243,6 +243,76 @@ folders
   .option('-p, --parent <parentId>', 'destination parent folder id')
   .option('-n, --name <name>', 'new folder name (optional)')
   .action(cmd('folders'))
+folders
+  .command('move <folderId>')
+  .description('move folder to a different parent')
+  .option('-p, --parent <parentId>', 'destination parent folder id')
+  .action(cmd('folders'))
+folders
+  .command('restore <folderId>')
+  .description('restore folder from trash')
+  .option('-p, --parent <parentId>', 'parent folder id to restore to')
+  .option('-n, --name <name>', 'new folder name (optional)')
+  .action(cmd('folders'))
+folders
+  .command('share <folderId>')
+  .description('create shared link for folder')
+  .option('-a, --access <access>', 'access level (open, company, collaborators)')
+  .option('-p, --password <password>', 'password for shared link')
+  .option('-u, --unshared-at <date>', 'date when link expires')
+  .option('--can-download <boolean>', 'allow downloads')
+  .option('--can-preview <boolean>', 'allow previews')
+  .option('--can-edit <boolean>', 'allow editing')
+  .action(cmd('folders'))
+folders
+  .command('unshare <folderId>')
+  .description('remove shared link from folder')
+  .action(cmd('folders'))
+folders
+  .command('collaborate <folderId>')
+  .description('add collaborator to folder')
+  .option('-e, --email <email>', 'email of user to collaborate with')
+  .option('-r, --role <role>', 'role (viewer, previewer, uploader, previewer_uploader, viewer_uploader, co-owner, editor)')
+  .option('--can-view-path <boolean>', 'allow viewing path')
+  .action(cmd('folders'))
+folders
+  .command('collaborations <folderId>')
+  .description('list folder collaborations')
+  .action(cmd('folders'))
+folders
+  .command('watermark <folderId>')
+  .description('apply watermark to folder')
+  .action(cmd('folders'))
+folders
+  .command('remove-watermark <folderId>')
+  .description('remove watermark from folder')
+  .action(cmd('folders'))
+folders
+  .command('get-metadata <folderId>')
+  .description('get metadata from folder')
+  .option('-s, --scope <scope>', 'metadata scope (default: global)')
+  .option('-t, --template <template>', 'metadata template (default: properties)')
+  .action(cmd('folders'))
+folders
+  .command('set-metadata <folderId>')
+  .description('set metadata on folder')
+  .option('-s, --scope <scope>', 'metadata scope (default: global)')
+  .option('-t, --template <template>', 'metadata template (default: properties)')
+  .option('-m, --metadata <metadata>', 'metadata JSON object')
+  .action(cmd('folders'))
+folders
+  .command('update-metadata <folderId>')
+  .description('update metadata on folder')
+  .option('-s, --scope <scope>', 'metadata scope (default: global)')
+  .option('-t, --template <template>', 'metadata template (default: properties)')
+  .option('-o, --operations <operations>', 'metadata operations JSON array')
+  .action(cmd('folders'))
+folders
+  .command('delete-metadata <folderId>')
+  .description('delete metadata from folder')
+  .option('-s, --scope <scope>', 'metadata scope (default: global)')
+  .option('-t, --template <template>', 'metadata template (default: properties)')
+  .action(cmd('folders'))
 
 const groups = program
   .command('groups')
