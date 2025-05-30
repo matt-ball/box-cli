@@ -243,6 +243,29 @@ folders
   .option('-p, --parent <parentId>', 'destination parent folder id')
   .option('-n, --name <name>', 'new folder name (optional)')
   .action(cmd('folders'))
+folders
+  .command('move <folderId>')
+  .description('move folder to a different parent')
+  .option('-p, --parent <parentId>', 'destination parent folder id (default: root folder)')
+  .action(cmd('folders'))
+folders
+  .command('share <folderId>')
+  .description('create or update shared link for folder')
+  .option('-a, --access <access>', 'access level: open, company, collaborators (default: open)')
+  .option('-w, --password <password>', 'password for shared link')
+  .option('-u, --unshared-at <date>', 'expiration date for shared link (ISO 8601 format)')
+  .action(cmd('folders'))
+folders
+  .command('add-collaboration <folderId>')
+  .description('add collaboration to folder')
+  .option('-e, --email <email>', 'email address of collaborator')
+  .option('-r, --role <role>', 'collaboration role: viewer, previewer, uploader, previewer_uploader, viewer_uploader, co-owner, editor (default: viewer)')
+  .option('-n, --notify', 'send email notification to collaborator')
+  .action(cmd('folders'))
+folders
+  .command('list-collaborations <folderId>')
+  .description('list collaborations on folder')
+  .action(cmd('folders'))
 
 const groups = program
   .command('groups')

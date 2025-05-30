@@ -6,7 +6,12 @@ jest.mock('../src/lib/client', () => ({
     delete: jest.fn(),
     update: jest.fn(),
     getItems: jest.fn(),
-    copy: jest.fn()
+    copy: jest.fn(),
+    move: jest.fn(),
+    getCollaborations: jest.fn()
+  },
+  collaborations: {
+    createWithUserEmail: jest.fn()
   }
 }))
 
@@ -115,4 +120,91 @@ test('can delete a folder', async () => {
 
   expect(client.folders.delete).toHaveBeenCalledWith(folderId)
   expect(result).toBe('Folder deleted!')
+})
+
+test('can move a folder', async () => {
+  const mockFolder = {
+    id: folderId,
+    name: 'test-folder',
+    type: 'folder',
+    parent: { id: '123' }
+  }
+  client.folders.move.mockResolvedValue(mockFolder)
+
+  const result = await folders(folderId, { parent: '123' }, { _name: 'move' })
+
+  expect(client.folders.move).toHaveBeenCalledWith(folderId, '123')
+  expect(result.parent.id).toBe('123')
+})
+
+test('can share a folder', async () => {
+  const mockFolder = {
+    id: folderId,
+    name: 'test-folder',
+    type: 'folder',
+    shared_link: {
+      url: 'https://app.box.com/s/abc123',
+      access: 'open'
+    }
+  }
+  client.folders.update.mockResolvedValue(mockFolder)
+
+  const result = await folders(folderId, { access: 'open' }, { _name: 'share' })
+
+  expect(client.folders.update).toHaveBeenCalledWith(folderId, {
+    shared_link: { access: 'open' }
+  })
+  expect(result.shared_link.access).toBe('open')
+})
+
+test('can add collaboration to folder', async () => {
+  const mockCollaboration = {
+    id: 'collab123',
+    type: 'collaboration',
+    role: 'viewer',
+    accessible_by: {
+      type: 'user',
+      login: 'test@example.com'
+    }
+  }
+  client.collaborations.createWithUserEmail.mockResolvedValue(mockCollaboration)
+
+  const result = await folders(folderId, {
+    email: 'test@example.com',
+    role: 'viewer'
+  }, { _name: 'add-collaboration' })
+
+  expect(client.collaborations.createWithUserEmail).toHaveBeenCalledWith(
+    'test@example.com',
+    folderId,
+    'viewer',
+    { type: 'folder' }
+  )
+  expect(result.accessible_by.login).toBe('test@example.com')
+})
+
+test('can list collaborations on folder', async () => {
+  const mockCollaborations = {
+    entries: [
+      {
+        id: 'collab123',
+        type: 'collaboration',
+        role: 'viewer',
+        accessible_by: { type: 'user', login: 'user1@example.com' }
+      },
+      {
+        id: 'collab456',
+        type: 'collaboration',
+        role: 'editor',
+        accessible_by: { type: 'user', login: 'user2@example.com' }
+      }
+    ]
+  }
+  client.folders.getCollaborations.mockResolvedValue(mockCollaborations)
+
+  const result = await folders(folderId, {}, { _name: 'list-collaborations' })
+
+  expect(client.folders.getCollaborations).toHaveBeenCalledWith(folderId)
+  expect(result.entries).toHaveLength(2)
+  expect(result.entries[0].role).toBe('viewer')
 })
