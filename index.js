@@ -243,6 +243,28 @@ folders
   .option('-p, --parent <parentId>', 'destination parent folder id')
   .option('-n, --name <name>', 'new folder name (optional)')
   .action(cmd('folders'))
+folders
+  .command('list-all')
+  .description('list all folders accessible to the user')
+  .action(cmd('folders'))
+folders
+  .command('search <query>')
+  .description('search for folders by name')
+  .action(cmd('folders'))
+folders
+  .command('move <folderId>')
+  .description('move folder to a different parent')
+  .option('-p, --parent <parentId>', 'destination parent folder id')
+  .action(cmd('folders'))
+folders
+  .command('get-collaborations <folderId>')
+  .description('get folder collaborations')
+  .action(cmd('folders'))
+folders
+  .command('share <folderId>')
+  .description('create a shared link for folder')
+  .option('-a, --access <access>', 'access level (open, company, collaborators)', 'open')
+  .action(cmd('folders'))
 
 const groups = program
   .command('groups')
