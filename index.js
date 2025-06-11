@@ -243,6 +243,26 @@ folders
   .option('-p, --parent <parentId>', 'destination parent folder id')
   .option('-n, --name <name>', 'new folder name (optional)')
   .action(cmd('folders'))
+folders
+  .command('move <folderId>')
+  .description('move folder to a new parent')
+  .option('-p, --parent <parentId>', 'new parent folder id (default: root folder)')
+  .action(cmd('folders'))
+folders
+  .command('get-collaborations <folderId>')
+  .description('get folder collaborations')
+  .action(cmd('folders'))
+folders
+  .command('add-collaboration <folderId>')
+  .description('add folder collaboration')
+  .option('-u, --user <userId>', 'user id to collaborate with')
+  .option('-r, --role <role>', 'collaboration role (viewer, editor, uploader, previewer, viewer_uploader, co-owner, owner)')
+  .action(cmd('folders'))
+folders
+  .command('remove-collaboration <folderId>')
+  .description('remove folder collaboration')
+  .option('-c, --collaboration <collaborationId>', 'collaboration id to remove')
+  .action(cmd('folders'))
 
 const groups = program
   .command('groups')

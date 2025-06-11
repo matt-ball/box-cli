@@ -32,6 +32,35 @@ The beginnings of a CLI for use with [Box](https://box.com).
 
 1. Run `box file upload <~/path/to/file.pdf> --folder 0` to upload a file to the root folder of your Box account
 
+## Folders Command
+
+The `folders` command provides comprehensive folder management capabilities:
+
+### Basic Operations
+- `box folders get <folderId>` - Get folder information
+- `box folders create <name> --parent <parentId>` - Create a new folder
+- `box folders update <folderId> --name <newName> --description <description>` - Update folder
+- `box folders delete <folderId>` - Delete folder
+- `box folders get-items <folderId>` - List items in folder
+
+### Copy and Move
+- `box folders copy <folderId> --parent <parentId> --name <newName>` - Copy folder
+- `box folders move <folderId> --parent <newParentId>` - Move folder to new parent
+
+### Collaboration Management
+- `box folders get-collaborations <folderId>` - Get folder collaborations
+- `box folders add-collaboration <folderId> --user <userId> --role <role>` - Add collaboration
+- `box folders remove-collaboration <folderId> --collaboration <collaborationId>` - Remove collaboration
+
+#### Collaboration Roles
+- `viewer` - Can view and download
+- `editor` - Can view, download, and edit
+- `uploader` - Can upload files
+- `previewer` - Can preview files
+- `viewer_uploader` - Can view and upload
+- `co-owner` - Can manage folder and collaborations
+- `owner` - Full control
+
 ## Notes
 
 After some time your access token will expire. You can refresh it by running `box setup` again.
