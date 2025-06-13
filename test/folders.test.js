@@ -6,7 +6,11 @@ jest.mock('../src/lib/client', () => ({
     delete: jest.fn(),
     update: jest.fn(),
     getItems: jest.fn(),
-    copy: jest.fn()
+    copy: jest.fn(),
+    getCollaborations: jest.fn()
+  },
+  search: {
+    query: jest.fn()
   }
 }))
 
@@ -115,4 +119,89 @@ test('can delete a folder', async () => {
 
   expect(client.folders.delete).toHaveBeenCalledWith(folderId)
   expect(result).toBe('Folder deleted!')
+})
+
+test('can list folders', async () => {
+  const mockFolders = {
+    entries: [
+      { id: 'folder1', name: 'Documents', type: 'folder' },
+      { id: 'folder2', name: 'Pictures', type: 'folder' }
+    ],
+    total_count: 2
+  }
+  client.search.query.mockResolvedValue(mockFolders)
+
+  const result = await folders('', { limit: '50' }, { _name: 'list' })
+
+  expect(client.search.query).toHaveBeenCalledWith('', {
+    type: 'folder',
+    limit: 50
+  })
+  expect(result).toHaveProperty('entries')
+  expect(Array.isArray(result.entries)).toBe(true)
+  expect(result.entries).toHaveLength(2)
+})
+
+test('can search folders', async () => {
+  const mockFolders = {
+    entries: [
+      { id: 'folder1', name: 'Project Documents', type: 'folder' }
+    ],
+    total_count: 1
+  }
+  client.search.query.mockResolvedValue(mockFolders)
+
+  const result = await folders('Project', { limit: '10' }, { _name: 'search' })
+
+  expect(client.search.query).toHaveBeenCalledWith('Project', {
+    type: 'folder',
+    limit: 10
+  })
+  expect(result).toHaveProperty('entries')
+  expect(result.entries).toHaveLength(1)
+  expect(result.entries[0].name).toBe('Project Documents')
+})
+
+test('can move a folder', async () => {
+  const mockFolder = {
+    id: folderId,
+    name: 'test-folder',
+    type: 'folder',
+    parent: { id: 'new-parent-id' }
+  }
+  client.folders.update.mockResolvedValue(mockFolder)
+
+  const result = await folders(folderId, { parent: 'new-parent-id' }, { _name: 'move' })
+
+  expect(client.folders.update).toHaveBeenCalledWith(folderId, { parent: { id: 'new-parent-id' } })
+  expect(result.parent.id).toBe('new-parent-id')
+})
+
+test('move folder throws error without parent', async () => {
+  await expect(folders(folderId, {}, { _name: 'move' }))
+    .rejects
+    .toThrow('Parent folder ID is required for move operation')
+})
+
+test('can get folder collaborations', async () => {
+  const mockCollaborations = {
+    entries: [
+      {
+        id: 'collab1',
+        type: 'collaboration',
+        accessible_by: { id: 'user1', name: 'John Doe', type: 'user' },
+        role: 'editor'
+      }
+    ],
+    total_count: 1
+  }
+  client.folders.getCollaborations.mockResolvedValue(mockCollaborations)
+
+  const result = await folders(folderId, {}, { _name: 'get-collaborations' })
+
+  expect(client.folders.getCollaborations).toHaveBeenCalledWith(folderId)
+  expect(result).toHaveProperty('entries')
+  expect(Array.isArray(result.entries)).toBe(true)
+  expect(result.entries).toHaveLength(1)
+  expect(result.entries[0].role).toBe('editor')
 })

@@ -243,6 +243,25 @@ folders
   .option('-p, --parent <parentId>', 'destination parent folder id')
   .option('-n, --name <name>', 'new folder name (optional)')
   .action(cmd('folders'))
+folders
+  .command('list')
+  .description('list all folders accessible to the user')
+  .option('-l, --limit <limit>', 'maximum number of folders to return (default: 100)')
+  .action(cmd('folders'))
+folders
+  .command('search <query>')
+  .description('search for folders by name')
+  .option('-l, --limit <limit>', 'maximum number of results to return (default: 100)')
+  .action(cmd('folders'))
+folders
+  .command('move <folderId>')
+  .description('move folder to a different parent')
+  .option('-p, --parent <parentId>', 'destination parent folder id')
+  .action(cmd('folders'))
+folders
+  .command('get-collaborations <folderId>')
+  .description('get folder collaborations and permissions')
+  .action(cmd('folders'))
 
 const groups = program
   .command('groups')
