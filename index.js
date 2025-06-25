@@ -243,6 +243,47 @@ folders
   .option('-p, --parent <parentId>', 'destination parent folder id')
   .option('-n, --name <name>', 'new folder name (optional)')
   .action(cmd('folders'))
+folders
+  .command('move <folderId>')
+  .description('move folder to different parent')
+  .option('-p, --parent <parentId>', 'destination parent folder id')
+  .action(cmd('folders'))
+folders
+  .command('share <folderId>')
+  .description('create or manage shared link for folder')
+  .option('-a, --access <access>', 'access level (open, company, collaborators)')
+  .option('-p, --password <password>', 'password for shared link')
+  .option('--can-download', 'allow download via shared link')
+  .option('--can-preview', 'allow preview via shared link')
+  .action(cmd('folders'))
+folders
+  .command('add-collaboration <folderId>')
+  .description('add collaborator to folder')
+  .option('-e, --email <email>', 'email of user to add')
+  .option('-r, --role <role>', 'role (viewer, previewer, uploader, previewer_uploader, viewer_uploader, co-owner, owner)')
+  .action(cmd('folders'))
+folders
+  .command('list-collaborations <folderId>')
+  .description('list collaborations on folder')
+  .action(cmd('folders'))
+folders
+  .command('remove-collaboration <collaborationId>')
+  .description('remove collaboration from folder')
+  .action(cmd('folders'))
+folders
+  .command('add-watermark <folderId>')
+  .description('apply watermark to folder')
+  .action(cmd('folders'))
+folders
+  .command('remove-watermark <folderId>')
+  .description('remove watermark from folder')
+  .action(cmd('folders'))
+folders
+  .command('restore <folderId>')
+  .description('restore folder from trash')
+  .option('-p, --parent <parentId>', 'parent folder id to restore to')
+  .option('-n, --name <n>', 'new name for restored folder')
+  .action(cmd('folders'))
 
 const groups = program
   .command('groups')
