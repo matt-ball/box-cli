@@ -211,6 +211,36 @@ file
   .description('delete file')
   .action(cmd('file'))
 
+	const folders = program
+	  .command('folders')
+	  .description('folder commands')
+	folders
+	  .command('create <name>')
+	  .description('create folder')
+	  .option('-p, --parent <parentId>', 'parent folder id')
+	  .action(cmd('folders'))
+	folders
+	  .command('get <folderId>')
+	  .description('get folder')
+	  .action(cmd('folders'))
+	folders
+	  .command('update <folderId>')
+	  .description('update folder')
+	  .option('-n, --name <name>', 'name of folder')
+	  .option('-p, --parent <parentId>', 'parent folder id')
+	  .action(cmd('folders'))
+	folders
+	  .command('delete <folderId>')
+	  .description('delete folder')
+	  .option('-f, --force', 'force delete folder and its contents')
+	  .action(cmd('folders'))
+	folders
+	  .command('get-items <folderId>')
+	  .description('get folder items')
+	  .option('-l, --limit <limit>', 'max number of items to return')
+	  .option('-o, --offset <offset>', 'offset of items to return')
+	  .action(cmd('folders'))
+
 const groups = program
   .command('groups')
   .description('groups commands')
